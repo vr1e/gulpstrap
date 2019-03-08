@@ -1,0 +1,43 @@
+{
+	"name": "gulpstrap",
+	"version": "0.0.1",
+	"description": "Bootstrap your app with gulp 4",
+	"license": "MIT",
+	"private": false,
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:vr1e/gulpstrap.git"
+	},
+	"scripts": {},
+	"devDependencies": {
+		"@babel/core": "^7.3.4",
+		"@babel/preset-env": "^7.3.4",
+		"@babel/register": "^7.0.0",
+		"@fortawesome/fontawesome-free": "^5.7.2",
+		"browser-sync": "^2.26.3",
+		"del": "^4.0.0",
+		"gulp": "^4.0.0",
+		"gulp-babel": "^8.0.0",
+		"gulp-clean-css": "^4.0.0",
+		"gulp-concat": "^2.6.1",
+		"gulp-rename": "^1.4.0",
+		"gulp-sass": "^4.0.2",
+		"gulp-uglify": "^3.0.2",
+		"node-sass": "^4.11.0"
+	},
+	"prettier": {
+		"trailingComma": "none",
+		"useTabs": true,
+		"tabWidth": 2,
+		"semi": true,
+		"singleQuote": true,
+		"jsxSingleQuote": true,
+		"bracketSpacing": true,
+		"jsxBracketSameLine": true,
+		"arrowParens": "avoid"
+	},
+	"dependencies": {
+		"bootstrap": "^4.3.1",
+		"jquery": "^3.3.1"
+	}
+}

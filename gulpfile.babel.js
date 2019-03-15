@@ -51,7 +51,7 @@ const dependencies = done => {
 
 const styles = () => {
 	return gulp
-		.src(`${paths.dist}index.scss`, { sourcemaps: true })
+		.src(`${paths.styles}main.scss`, { sourcemaps: true })
 		.pipe(sass().on('error', sass.logError))
 		.pipe(gulp.dest(`${paths.dist}styles/`));
 };

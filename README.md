@@ -1,4 +1,4 @@
-# Gulp 4, jQuery, Fontawesome 5 and Bootstrap 4
+# Gulp 4, Bootstrap 4, Fontawesome 5 and jQuery
 
 Use this to startup your project with gulp tasks in a couple of seconds.
 
@@ -19,5 +19,5 @@ $ gulp
 - [node.js](https://nodejs.org) - Node.js JavaScript runtime
 - [Gulp](https://gulpjs.com/) - Automate and enhance your workflow
 - [Font Awesome](http://fontawesome.io/) - The iconic font and CSS toolkit
-- [Twitter Bootstrap](https://getbootstrap.com/) - Build responsive, mobile-first projects on the web with the world’s most popular front-end component library.
+- [Twitter Bootstrap](https://getbootstrap.com/) - Build responsive, mobile-first projects on the web with the world’s most popular front-end component library
 - [jQuery](https://jquery.com/) - Write less do more library

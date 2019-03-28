@@ -5,18 +5,9 @@ import sass from 'gulp-sass';
 import del from 'del';
 import uglify from 'gulp-uglify';
 import browserSync from 'browser-sync';
+import {paths, jsDependencies, cssDependencies } from './gulp.constants';
 
 const server = browserSync.create();
-
-const paths = {
-	sctipts: 'src/scripts/*.js',
-	styles: 'src/styles/',
-	dist: 'dist/',
-	dest: 'dist/scripts/',
-	lib: 'src/scripts/',
-	watch: ['src/styles/**', 'src/scripts/**', 'src/*.html']
-};
-
 const clean = () => del(['dist']);
 
 function scripts() {
@@ -32,36 +23,36 @@ function copy() {
 	return gulp.src(['./src/*.html']).pipe(gulp.dest(paths.dist));
 }
 
-function jsDependencies() {
+function js() {
 	return gulp
-		.src([
-			'node_modules/bootstrap/dist/js/bootstrap.js',
-			'node_modules/jquery/dist/jquery.js',
-			'src/lib/popper.min.js'
-		])
+		.src(jsDependencies)
 		.pipe(gulp.dest(paths.dest));
 }
 
-const dependencies = done => {
+const fonts = done => {
 	gulp
 		.src(['node_modules/@fortawesome/fontawesome-free/webfonts/**'])
 		.pipe(gulp.dest(`${paths.dist}webfonts/`));
 	done();
 };
 
-const styles = () => {
+const customStyles = () => {
 	return gulp
 		.src(`${paths.styles}main.scss`, { sourcemaps: true })
 		.pipe(sass().on('error', sass.logError))
 		.pipe(gulp.dest(`${paths.dist}styles/`));
 };
 
-function cssDependencies() {
+const bootstrap = () => {
 	return gulp
-		.src([
-			'node_modules/bootstrap/dist/css/bootstrap.css',
-			'node_modules/@fortawesome/fontawesome-free/css/all.css'
-		])
+		.src(`${paths.styles}vendors/bootstrap/bootstrap.scss`, { sourcemaps: true })
+		.pipe(sass().on('error', sass.logError))
+		.pipe(gulp.dest(`${paths.dist}styles/`));
+};
+
+function css() {
+	return gulp
+		.src(cssDependencies)
 		.pipe(gulp.dest(`${paths.dist}styles/`));
 }
 
@@ -80,15 +71,16 @@ function serve(done) {
 }
 
 const watch = () =>
-	gulp.watch(paths.watch, gulp.series(copy, styles, scripts, reload));
+	gulp.watch(paths.watch, gulp.series(copy, customStyles, bootstrap, scripts, reload));
 
 const dev = gulp.series(
 	clean,
 	copy,
-	dependencies,
-	jsDependencies,
-	cssDependencies,
-	styles,
+	fonts,
+	js,
+	css,
+	customStyles,
+	bootstrap,
 	scripts,
 	serve,
 	watch

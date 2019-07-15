@@ -5,7 +5,7 @@ import sass from 'gulp-sass';
 import del from 'del';
 import uglify from 'gulp-uglify';
 import browserSync from 'browser-sync';
-import {paths, jsDependencies, cssDependencies } from './gulp.constants';
+import { paths, jsDependencies, cssDependencies } from './gulp.constants';
 
 const server = browserSync.create();
 const clean = () => del(['dist']);
@@ -24,9 +24,7 @@ function copy() {
 }
 
 function js() {
-	return gulp
-		.src(jsDependencies)
-		.pipe(gulp.dest(paths.dest));
+	return gulp.src(jsDependencies).pipe(gulp.dest(paths.dest));
 }
 
 const fonts = done => {
@@ -45,15 +43,15 @@ const customStyles = () => {
 
 const bootstrap = () => {
 	return gulp
-		.src(`${paths.styles}vendors/bootstrap/bootstrap.scss`, { sourcemaps: true })
+		.src(`${paths.styles}vendors/bootstrap/bootstrap.scss`, {
+			sourcemaps: true
+		})
 		.pipe(sass().on('error', sass.logError))
 		.pipe(gulp.dest(`${paths.dist}styles/`));
 };
 
 function css() {
-	return gulp
-		.src(cssDependencies)
-		.pipe(gulp.dest(`${paths.dist}styles/`));
+	return gulp.src(cssDependencies).pipe(gulp.dest(`${paths.dist}styles/`));
 }
 
 function reload(done) {
@@ -71,7 +69,10 @@ function serve(done) {
 }
 
 const watch = () =>
-	gulp.watch(paths.watch, gulp.series(copy, customStyles, bootstrap, scripts, reload));
+	gulp.watch(
+		paths.watch,
+		gulp.series(copy, customStyles, bootstrap, scripts, reload)
+	);
 
 const dev = gulp.series(
 	clean,

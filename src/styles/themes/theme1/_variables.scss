@@ -1,0 +1,26 @@
+/* Import from default theme styles (light version of this theme)  */
+@import '../_white_label/variables';
+
+/* Variables Overrides for bootstrap default variables */
+
+// Color system
+
+$white: #ffe599;
+$gray-600: #fd7e14;
+
+$grays: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$grays: map-merge(
+	(
+		'100': $gray-100,
+		'200': $gray-200,
+		'300': $gray-300,
+		'400': $gray-400,
+		'500': $gray-500,
+		'600': $gray-600,
+		'700': $gray-700,
+		'800': $gray-800,
+		'900': $gray-900
+	),
+	$grays
+);

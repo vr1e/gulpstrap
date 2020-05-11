@@ -1,6 +1,6 @@
 {
 	"name": "gulpstrap",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Bootstrap your app with gulp 4, fontawesome 5 and jQuery",
 	"license": "MIT",
 	"private": false,

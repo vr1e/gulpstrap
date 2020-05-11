@@ -1,0 +1,10 @@
+/* Import from default theme styles (light version of this theme)  */
+@import '../theme1/variables';
+
+/* Variables Overrides for bootstrap default variables */
+
+// Color system
+
+$white: #333333;
+$gray-600: #69737c;
+$gray-900: #ced4da;

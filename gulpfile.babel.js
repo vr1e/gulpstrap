@@ -3,7 +3,7 @@ import babel from 'gulp-babel';
 import concat from 'gulp-concat';
 import sass from 'gulp-sass';
 import del from 'del';
-import uglify from 'gulp-uglify';
+// import uglify from 'gulp-uglify';
 import browserSync from 'browser-sync';
 import { paths, jsDependencies, cssDependencies } from './gulp.constants';
 
@@ -11,12 +11,14 @@ const server = browserSync.create();
 const clean = () => del(['dist']);
 
 function scripts() {
-	return gulp
-		.src(paths.sctipts, { sourcemaps: true })
-		.pipe(babel())
-		.pipe(uglify())
-		.pipe(concat('index.min.js'))
-		.pipe(gulp.dest(paths.dest));
+	return (
+		gulp
+			.src(paths.sctipts, { sourcemaps: true })
+			.pipe(babel())
+			// .pipe(uglify())
+			.pipe(concat('index.js'))
+			.pipe(gulp.dest(paths.dest))
+	);
 }
 
 function copy() {

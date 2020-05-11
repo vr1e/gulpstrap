@@ -14,6 +14,14 @@ $ npm install
 $ gulp
 ```
 
+### Styling
+
+To _change default bootstrap variables_ edit: `/src/styles/themes/default_theme/_variables.scss`.
+
+To _change current active theme_ add it with same structure as `default_theme` and change the path inside: `/src/styles/themes/active_theme.scss` and for the variables import edit `/src/styles/vendors/bootstrap/bootstrap.scss`.
+
+Add more bootstrap partial functionalities by editing: `src/styles/vendors/bootstrap/bootstrap.scss`.
+
 ### Tech
 
 - [node.js](https://nodejs.org) - Node.js JavaScript runtime

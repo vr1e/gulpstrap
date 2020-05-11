@@ -14,11 +14,13 @@ $ npm install
 $ gulp
 ```
 
-### Styling
+### Styling and themes
 
-To _change default bootstrap variables_ edit: `/src/styles/themes/default_theme/_variables.scss`.
+The default theme is inside `_white_label` folder and it holds universal bootstrap overrides for all themes inside the `_variables.scss` file. The other themes example `theme1` inherit from `_white_label` and dark version of themes should inherit from it's light (default) theme. for example `theme1-dark` from `theme1`.
 
-To _change current active theme_ add it with same structure as `default_theme` and change the path inside: `/src/styles/themes/active_theme.scss` and for the variables import edit `/src/styles/vendors/bootstrap/bootstrap.scss`.
+To **change default bootstrap variables** edit: `/src/styles/themes/_white_label/_variables.scss`.
+
+To **change current active theme** add it with same structure as example `theme1` and change the path inside: `/src/styles/themes/active_theme.scss` and for the bootstrap variables import edit `/src/styles/vendors/bootstrap/bootstrap.scss`.
 
 Add more bootstrap partial functionalities by editing: `src/styles/vendors/bootstrap/bootstrap.scss`.
 

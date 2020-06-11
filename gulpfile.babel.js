@@ -42,21 +42,21 @@ const fonts = done => {
 	done();
 };
 
-const customStyles = () => {
+const styles = () => {
 	return gulp
 		.src(`${paths.styles}main.scss`, { sourcemaps: true })
 		.pipe(sass().on('error', sass.logError))
 		.pipe(gulp.dest(`${paths.dist}styles/`));
 };
 
-const bootstrap = () => {
-	return gulp
-		.src(`${paths.styles}vendors/bootstrap/bootstrap.scss`, {
-			sourcemaps: true
-		})
-		.pipe(sass().on('error', sass.logError))
-		.pipe(gulp.dest(`${paths.dist}styles/`));
-};
+// const bootstrap = () => {
+// 	return gulp
+// 		.src(`${paths.styles}vendors/bootstrap/bootstrap.scss`, {
+// 			sourcemaps: true
+// 		})
+// 		.pipe(sass().on('error', sass.logError))
+// 		.pipe(gulp.dest(`${paths.dist}styles/`));
+// };
 
 function css() {
 	return gulp.src(cssDependencies).pipe(gulp.dest(`${paths.dist}styles/`));
@@ -79,7 +79,7 @@ function serve(done) {
 const watch = () =>
 	gulp.watch(
 		paths.watch,
-		gulp.series(copyAssets, copy, customStyles, bootstrap, scripts, reload)
+		gulp.series(copyAssets, copy, styles, scripts, reload)
 	);
 
 const dev = gulp.series(
@@ -89,8 +89,7 @@ const dev = gulp.series(
 	fonts,
 	js,
 	css,
-	customStyles,
-	bootstrap,
+	styles,
 	scripts,
 	serve,
 	watch

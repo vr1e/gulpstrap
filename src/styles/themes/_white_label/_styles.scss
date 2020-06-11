@@ -11,3 +11,7 @@ VENDOR: handles 3rd party css
 .list-group-item {
 	list-style-type: none;
 }
+
+.text-muted {
+	color: $secondary !important;
+}

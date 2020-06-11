@@ -17,6 +17,7 @@ export const jsDependencies = [
 	'node_modules/popper.js/dist/umd/popper.js.map'
 ];
 
+/* Vendor css dependencies - excluding bootstrap because of variables inside our custom css */
 export const cssDependencies = [
 	'node_modules/@fortawesome/fontawesome-free/css/all.css'
 ];

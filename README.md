@@ -24,7 +24,7 @@ The default theme is inside `_white_label` folder and it holds universal bootstr
 
 To **change default bootstrap variables** edit: `/src/styles/themes/_white_label/_variables.scss`.
 
-To **change current active theme** add it with same structure as example `theme1` and change the path inside: `/src/styles/themes/active_theme.scss` and for the bootstrap variables import edit `/src/styles/vendors/bootstrap/bootstrap.scss`.
+To **change current active theme** add it with same structure as example `theme1` and change the path inside: `/src/styles/themes/active_theme.scss` and for the bootstrap variables import edit `/src/styles/active_theme_variables.scss`.
 
 Add more bootstrap partial functionalities by editing: `src/styles/vendors/bootstrap/bootstrap.scss`.
 

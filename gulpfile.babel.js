@@ -21,6 +21,12 @@ function scripts() {
 	);
 }
 
+function copyAssets() {
+	return gulp
+		.src(['./src/assets/**/*'])
+		.pipe(gulp.dest(`${paths.dist}assets/`));
+}
+
 function copy() {
 	return gulp.src(['./src/*.html']).pipe(gulp.dest(paths.dist));
 }
@@ -73,11 +79,12 @@ function serve(done) {
 const watch = () =>
 	gulp.watch(
 		paths.watch,
-		gulp.series(copy, customStyles, bootstrap, scripts, reload)
+		gulp.series(copyAssets, copy, customStyles, bootstrap, scripts, reload)
 	);
 
 const dev = gulp.series(
 	clean,
+	copyAssets,
 	copy,
 	fonts,
 	js,

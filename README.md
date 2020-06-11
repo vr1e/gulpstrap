@@ -6,6 +6,10 @@ Use this to startup your project with gulp tasks in a couple of seconds.
 
 Requires [node.js](https://nodejs.org/) and [gulp-cli](https://www.npmjs.com/package/gulp-cli) installed globally (-g) to run.
 
+```
+npm install gulp-cli -g
+```
+
 Install the dependencies and devDependencies.
 
 ```

@@ -5,6 +5,7 @@ export const paths = {
 	dist: 'dist/',
 	dest: 'dist/scripts/',
 	lib: 'src/scripts/',
+	assets: 'src/assets/',
 	watch: ['src/styles/**', 'src/scripts/**', 'src/*.html']
 };
 

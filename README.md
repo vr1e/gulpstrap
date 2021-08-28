@@ -1,4 +1,4 @@
-# [Gulp 4, Bootstrap 5, Fontawesome 5 and jQuery](https://gulpstrap.netlify.app)
+# [Bootstrap 5.1, FontAwesome 5, jQuery, and Popper using Gulp 4](https://gulpstrap.netlify.app)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/fc05ecaa-ee9b-4f2c-920f-04fcf3f6874c/deploy-status)](https://app.netlify.com/sites/gulpstrap/deploys)
 

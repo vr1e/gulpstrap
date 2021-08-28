@@ -1,10 +1,8 @@
-import gulp from 'gulp';
-import babel from 'gulp-babel';
+const gulp = require('gulp');
 const sass = require('gulp-sass')(require('sass'));
-import del from 'del';
-// import uglify from 'gulp-uglify';
-import browserSync from 'browser-sync';
-import { paths, jsDependencies, cssDependencies } from './gulp.constants';
+const del = require('del');
+const browserSync = require('browser-sync');
+const { paths, jsDependencies, cssDependencies } = require('./gulp.constants');
 
 const server = browserSync.create();
 
@@ -15,14 +13,9 @@ function cleanDist() {
 
 /* compiles user written javascript */
 function compileCustomJavaScript() {
-	return (
-		gulp
-			.src(paths.scripts, { sourcemaps: true })
-			.pipe(babel())
-			// .pipe(uglify())
-			// .pipe(concat('index.js'))
-			.pipe(gulp.dest(paths.dest))
-	);
+	return gulp
+		.src(paths.scripts, { sourcemaps: true })
+		.pipe(gulp.dest(paths.dest));
 }
 
 /* copies static assets preserving folder structure */
@@ -30,6 +23,11 @@ function copyAssets() {
 	return gulp
 		.src(['./src/assets/**/*'])
 		.pipe(gulp.dest(`${paths.dist}assets/`));
+}
+
+/* copies static assets preserving folder structure */
+function copyIcons() {
+	return gulp.src(['./src/assets/icons/*']).pipe(gulp.dest(`${paths.dist}`));
 }
 
 /* copies all html files from root */
@@ -94,6 +92,7 @@ function watch() {
 exports.default = gulp.series(
 	cleanDist,
 	copyAssets,
+	copyIcons,
 	copyHtml,
 	copyFontawesomeFonts,
 	copyJavaScriptDependencies,
@@ -109,6 +108,7 @@ exports.build = gulp.series(
 	cleanDist,
 	gulp.parallel(
 		copyAssets,
+		copyIcons,
 		copyHtml,
 		copyFontawesomeFonts,
 		copyJavaScriptDependencies,

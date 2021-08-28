@@ -1,4 +1,6 @@
-# Gulp 4, Bootstrap 5, Fontawesome 5 and jQuery
+# [Gulp 4, Bootstrap 5, Fontawesome 5 and jQuery](https://gulpstrap.netlify.app)
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/fc05ecaa-ee9b-4f2c-920f-04fcf3f6874c/deploy-status)](https://app.netlify.com/sites/gulpstrap/deploys)
 
 Use this to startup your project using gulp in a couple of seconds.
 

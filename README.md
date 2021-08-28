@@ -1,6 +1,6 @@
-# Gulp 4, Bootstrap 4, Fontawesome 5 and jQuery
+# Gulp 4, Bootstrap 5, Fontawesome 5 and jQuery
 
-Use this to startup your project with gulp tasks in a couple of seconds.
+Use this to startup your project using gulp in a couple of seconds.
 
 ### Installation
 
@@ -20,13 +20,53 @@ $ gulp
 
 ### Styling and themes
 
-The default theme is inside `_white_label` folder and it holds universal bootstrap overrides for all themes inside the `_variables.scss` file. The other themes example `theme1` inherit from `_white_label` and dark version of themes should inherit from it's light (default) theme. for example `theme1-dark` from `theme1`.
+The default styling for all themes is inside `whitelabel` folder and it holds universal bootstrap overrides for all themes inside the `_variables.scss` file.
 
-To **change default bootstrap variables** edit: `/src/styles/themes/_white_label/_variables.scss`.
+The other themes example `theme1` inherit from `whitelabel` and dark version of themes should inherit from it's light parent theme. for example `theme1-dark` from `theme1`.
 
-To **change current active theme** add it with same structure as example `theme1` and change the path inside: `/src/styles/themes/active_theme.scss` and for the bootstrap variables import edit `/src/styles/active_theme_variables.scss`.
+To **override bootstrap variables** edit: `styles/themes/whitelabel/_variables.scss`.
+To **override bootstrap colors** edit: `styles/themes/whitelabel/base/_colors.scss`.
+To **override bootstrap typography** edit: `styles/themes/whitelabel/base/_typography.scss`.
 
-Add more bootstrap partial functionalities by editing: `src/styles/vendors/bootstrap/bootstrap.scss`.
+To **override styles for specific theme** edit: `styles/themes/theme1`.
+
+To **change current active theme** edit `theme1` and change the path inside: `styles/themes/active_theme.scss` and `styles/active_theme_variables.scss`.
+
+Add more bootstrap optional components by editing: `styles/vendors/bootstrap/bootstrap.scss`.
+
+```
+styles/
+├── themes/
+│   ├── active_theme_variables.scss
+│   ├── active_theme.scss
+│   │
+│   ├── theme1/
+│   │   ├── _styles.scss
+│   │   ├── _variables.scss
+│   │   ├── index.scss
+│   │   └── base/
+│   │       ├── _colors.scss
+│   │       ├── _typography.scss
+│   │       └── index.scss
+│   │
+│   ├── theme1-dark/
+│   │   ├── _styles.scss
+│   │   ├── _variables.scss
+│   │   └── index.scss
+│   │
+│   └── whitelabel/
+│       ├── _styles.scss
+│       ├── _variables.scss
+│       ├── index.scss
+│       └── base/
+│           ├── _base.scss
+│           ├── _colors.scss
+│           ├── _typography.scss
+│           └── index.scss
+└──  vendors/
+     └── bootstrap/
+         └── bootstrap.scss
+```
 
 ### Tech
 
@@ -35,3 +75,4 @@ Add more bootstrap partial functionalities by editing: `src/styles/vendors/boots
 - [Font Awesome](http://fontawesome.io/) - The iconic font and CSS toolkit
 - [Twitter Bootstrap](https://getbootstrap.com/) - Build responsive, mobile-first projects on the web with the world’s most popular front-end component library
 - [jQuery](https://jquery.com/) - Write less do more library
+- [Popper](https://popper.js.org/) - Tooltip & popover positioning engine

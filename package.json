@@ -1,7 +1,7 @@
 {
 	"name": "gulpstrap",
-	"version": "0.1.1",
-	"description": "Bootstrap your app with gulp 4, fontawesome 5 and jQuery",
+	"version": "1.0.0",
+	"description": "Bootstrap your app with gulp 4, Bootstrap 5.1, Fontawesome 5 and jQuery",
 	"license": "MIT",
 	"private": false,
 	"repository": {
@@ -10,20 +10,20 @@
 	},
 	"scripts": {},
 	"devDependencies": {
-		"@babel/core": "^7.10.2",
-		"@babel/preset-env": "^7.10.2",
-		"@babel/register": "^7.10.1",
-		"@fortawesome/fontawesome-free": "^5.13.0",
-		"browser-sync": "^2.26.7",
-		"del": "^5.1.0",
+		"@babel/core": "^7.15.0",
+		"@babel/preset-env": "^7.15.0",
+		"@babel/register": "^7.15.3",
+		"@fortawesome/fontawesome-free": "^5.15.4",
+		"browser-sync": "^2.27.5",
+		"del": "^6.0.0",
 		"gulp": "^4.0.2",
 		"gulp-babel": "^8.0.0",
 		"gulp-clean-css": "^4.3.0",
 		"gulp-concat": "^2.6.1",
 		"gulp-rename": "^2.0.0",
-		"gulp-sass": "^4.1.0",
+		"gulp-sass": "^5.0.0",
 		"gulp-uglify": "^3.0.2",
-		"node-sass": "^4.14.1"
+		"sass": "^1.38.1"
 	},
 	"prettier": {
 		"trailingComma": "none",
@@ -31,14 +31,12 @@
 		"tabWidth": 2,
 		"semi": true,
 		"singleQuote": true,
-		"jsxSingleQuote": true,
 		"bracketSpacing": true,
-		"jsxBracketSameLine": true,
 		"arrowParens": "avoid"
 	},
 	"dependencies": {
-		"bootstrap": "^4.5.0",
-		"jquery": "^3.5.1",
-		"popper.js": "^1.16.1"
+		"@popperjs/core": "^2.9.3",
+		"bootstrap": "^5.1.0",
+		"jquery": "^3.6.0"
 	}
 }

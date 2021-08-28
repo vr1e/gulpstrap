@@ -1,13 +1,1 @@
-/*
-BASE: animations, base, typography, and utilies.
-COMPONENTS: single scss file for each individual component
-LAYOUT: header, footer, grid, navigation
-PAGES: a single scss for each specific page
-THEMES: various themes for project
-ABSTRACTS: handles function, mixins, and variables
-VENDOR: handles 3rd party css
-*/
-
-.list-group-item {
-	list-style-type: none;
-}
+/* overrides - theme specific styles */

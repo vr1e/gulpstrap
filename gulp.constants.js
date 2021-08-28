@@ -1,6 +1,6 @@
 /* Default paths */
 export const paths = {
-	sctipts: 'src/scripts/*.js',
+	scripts: 'src/scripts/*.js',
 	styles: 'src/styles/',
 	dist: 'dist/',
 	dest: 'dist/scripts/',
@@ -10,11 +10,11 @@ export const paths = {
 };
 
 export const jsDependencies = [
+	'node_modules/@popperjs/core/dist/umd/popper.min.js',
+	'node_modules/@popperjs/core/dist/umd/popper.min.js.map',
 	'node_modules/bootstrap/dist/js/bootstrap.js',
 	'node_modules/bootstrap/dist/js/bootstrap.js.map',
 	'node_modules/jquery/dist/jquery.js',
-	'node_modules/popper.js/dist/umd/popper.js',
-	'node_modules/popper.js/dist/umd/popper.js.map'
 ];
 
 /* Vendor css dependencies - excluding bootstrap because of variables inside our custom css */

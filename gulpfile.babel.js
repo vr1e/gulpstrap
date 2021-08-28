@@ -1,7 +1,7 @@
 import gulp from 'gulp';
 import babel from 'gulp-babel';
 import concat from 'gulp-concat';
-import sass from 'gulp-sass';
+const sass = require('gulp-sass')(require('sass'));
 import del from 'del';
 // import uglify from 'gulp-uglify';
 import browserSync from 'browser-sync';
@@ -13,10 +13,10 @@ const clean = () => del(['dist']);
 function scripts() {
 	return (
 		gulp
-			.src(paths.sctipts, { sourcemaps: true })
+			.src(paths.scripts, { sourcemaps: true })
 			.pipe(babel())
 			// .pipe(uglify())
-			.pipe(concat('index.js'))
+			// .pipe(concat('index.js'))
 			.pipe(gulp.dest(paths.dest))
 	);
 }
@@ -45,18 +45,9 @@ const fonts = done => {
 const styles = () => {
 	return gulp
 		.src(`${paths.styles}main.scss`, { sourcemaps: true })
-		.pipe(sass().on('error', sass.logError))
+		.pipe(sass({ includePaths: ['node_modules'] }).on('error', sass.logError))
 		.pipe(gulp.dest(`${paths.dist}styles/`));
 };
-
-// const bootstrap = () => {
-// 	return gulp
-// 		.src(`${paths.styles}vendors/bootstrap/bootstrap.scss`, {
-// 			sourcemaps: true
-// 		})
-// 		.pipe(sass().on('error', sass.logError))
-// 		.pipe(gulp.dest(`${paths.dist}styles/`));
-// };
 
 function css() {
 	return gulp.src(cssDependencies).pipe(gulp.dest(`${paths.dist}styles/`));

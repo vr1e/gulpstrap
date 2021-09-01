@@ -4,7 +4,7 @@
 
 Use this to startup your project using gulp in a couple of seconds.
 
-### Installation
+## 🚧 Installation
 
 Requires [node.js](https://nodejs.org/) and [gulp-cli](https://www.npmjs.com/package/gulp-cli) installed globally (-g) to run.
 
@@ -20,7 +20,7 @@ $ npm install
 $ gulp
 ```
 
-### Styling and themes
+## 🎨 Styling and themes
 
 The default styling for all themes is inside `whitelabel` folder and it holds universal bootstrap overrides for all themes inside the `_variables.scss` file.
 
@@ -70,7 +70,7 @@ styles/
          └── bootstrap.scss
 ```
 
-### Tech
+## ⌨️ Tech
 
 - [node.js](https://nodejs.org) - Node.js JavaScript runtime
 - [Gulp](https://gulpjs.com/) - Automate and enhance your workflow

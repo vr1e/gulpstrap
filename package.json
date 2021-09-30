@@ -22,7 +22,7 @@
 		"gulp-rename": "^2.0.0",
 		"gulp-sass": "^5.0.0",
 		"gulp-uglify": "^3.0.2",
-		"sass": "^1.38.1"
+		"sass": "^1.42.1"
 	},
 	"prettier": {
 		"trailingComma": "none",
@@ -34,8 +34,8 @@
 		"arrowParens": "avoid"
 	},
 	"dependencies": {
-		"@popperjs/core": "^2.9.3",
-		"bootstrap": "^5.1.0",
+		"@popperjs/core": "^2.10.2",
+		"bootstrap": "^5.1.1",
 		"jquery": "^3.6.0"
 	}
 }

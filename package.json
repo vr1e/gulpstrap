@@ -1,6 +1,6 @@
 {
 	"name": "gulpstrap",
-	"version": "1.0.2",
+	"version": "2.0.0",
 	"description": "Generate your static website with Bootstrap 5.1, FontAwesome 5, jQuery, and Popper included. Very nice for prototyping. Supports multiple theme styling.",
 	"license": "MIT",
 	"private": false,
@@ -8,21 +8,28 @@
 		"type": "git",
 		"url": "git@github.com:vr1e/gulpstrap.git"
 	},
+	"engines": {
+		"node": "22"
+	},
 	"scripts": {
 		"start": "gulp",
 		"build": "gulp build"
 	},
 	"devDependencies": {
 		"@fortawesome/fontawesome-free": "^5.15.4",
-		"browser-sync": "^2.27.5",
-		"del": "^6.0.0",
-		"gulp": "^4.0.2",
+		"browser-sync": "^3.0.4",
+		"gulp": "^5.0.1",
 		"gulp-clean-css": "^4.3.0",
 		"gulp-concat": "^2.6.1",
-		"gulp-rename": "^2.0.0",
-		"gulp-sass": "^5.0.0",
+		"gulp-rename": "^2.1.0",
+		"gulp-sass": "^6.0.1",
 		"gulp-uglify": "^3.0.2",
-		"sass": "^1.42.1"
+		"sass": "^1.93.2"
+	},
+	"dependencies": {
+		"@popperjs/core": "^2.11.8",
+		"bootstrap": "^5.3.8",
+		"jquery": "^3.7.1"
 	},
 	"prettier": {
 		"trailingComma": "none",
@@ -32,10 +39,5 @@
 		"singleQuote": true,
 		"bracketSpacing": true,
 		"arrowParens": "avoid"
-	},
-	"dependencies": {
-		"@popperjs/core": "^2.10.2",
-		"bootstrap": "^5.1.1",
-		"jquery": "^3.6.0"
 	}
 }

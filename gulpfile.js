@@ -127,13 +127,12 @@ function copyJavaScriptDependencies() {
 }
 
 /* copies fontawesome font dependencies */
-function copyFontawesomeFonts(done) {
-	gulp
+function copyFontawesomeFonts() {
+	return gulp
 		.src(['node_modules/@fortawesome/fontawesome-free/webfonts/**'], {
 			encoding: false
 		})
 		.pipe(gulp.dest(`${paths.dist}webfonts/`));
-	done();
 }
 
 /* compiles all user styles including bootstrap and other imports */

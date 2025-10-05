@@ -185,7 +185,7 @@ function compileSass() {
 /* compiles all available themes for runtime switching */
 function compileAllThemes() {
 	const rename = require('gulp-rename');
-	const themes = ['whitelabel', 'theme1', 'theme1-dark'];
+	const themes = ['whitelabel', 'theme1', 'theme1-dark', 'monochrome'];
 
 	return Promise.all(
 		themes.map((theme) => {

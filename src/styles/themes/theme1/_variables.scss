@@ -1,26 +1,24 @@
-@import '../whitelabel/variables'; // whitelabel common theme variable overrides (used inside all themes)
+// Theme1 - Bootstrap variable overrides
+// Inherits from whitelabel
+@import '../whitelabel/variables';
 
-/* Variables Overrides for bootstrap default variables */
-/* Note: These should be set BEFORE Bootstrap variables are imported */
-/* Do NOT use !default here - we want to override Bootstrap defaults */
+// Map color palette to Bootstrap variables (colors defined in base/_colors.scss)
+$primary: $dark-cyan;
+$secondary: $gamboge;
+$success: $tiffany-blue;
+$info: $midnight-green;
+$warning: $vanilla;
+$danger: $rufous;
+$light: $tiffany-blue;
+$dark: $rich-black;
 
-// Bootstrap color system - vibrant palette mix
-$primary: #0a9396;
-$secondary: #ee9b00;
-$success: #94d2bd;
-$info: #005f73;
-$warning: #e9d8a6;
-$danger: #ae2012;
-$light: #94d2bd;
-$dark: #001219;
+// Body colors
+$body-bg: $cream;
+$body-color: $rich-black;
 
-// Body
-$body-bg: #faf6ec;
-$body-color: #001219;
+// Link colors
+$link-color: $alloy-orange;
+$link-hover-color: $rust;
 
-// Links
-$link-color: #ca6702;
-$link-hover-color: #bb3e03;
-
-// Additional accent colors
-$border-color: #94d2bd;
+// Border colors
+$border-color: $tiffany-blue;

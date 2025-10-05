@@ -1,5 +1,8 @@
 /* import bootstrap functions to use with active theme variables */
 @import 'node_modules/bootstrap/scss/functions';
 
+/* Import theme colors (needed for variables) */
+@import 'theme1/base/colors';
+
 /* Set active theme variables */
 @import 'theme1-dark/variables';

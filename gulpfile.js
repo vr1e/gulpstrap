@@ -8,12 +8,19 @@ const cleanCSS = require('gulp-clean-css');
 const uglify = require('gulp-uglify');
 const rev = require('gulp-rev').default;
 const revRewrite = require('gulp-rev-rewrite').default;
+const plumber = require('gulp-plumber');
 const { paths, jsDependencies, cssDependencies } = require('./gulp.constants');
 
 const server = browserSync.create();
 
 // Environment detection
 const isProduction = process.env.NODE_ENV === 'production';
+
+// Error handler for plumber
+const errorHandler = (err) => {
+	console.error('\x1b[31m%s\x1b[0m', `Error: ${err.message}`);
+	this.emit('end');
+};
 
 // Lazy-load imagemin (ESM module)
 let imageminPlugin;
@@ -32,7 +39,7 @@ function cleanDist() {
 
 /* compiles user written javascript */
 function compileCustomJavaScript() {
-	let stream = gulp.src(paths.scripts);
+	let stream = gulp.src(paths.scripts).pipe(plumber({ errorHandler }));
 
 	// Add sourcemaps only in development
 	if (!isProduction) {
@@ -58,9 +65,7 @@ function compileCustomJavaScript() {
 
 	// Write rev manifest in production
 	if (isProduction) {
-		stream = stream
-			.pipe(rev.manifest('js-manifest.json'))
-			.pipe(gulp.dest(paths.dist));
+		stream = stream.pipe(rev.manifest('js-manifest.json')).pipe(gulp.dest(paths.dist));
 	}
 
 	return stream;
@@ -81,9 +86,7 @@ async function copyAssets() {
 
 /* copies static assets preserving folder structure */
 function copyIcons() {
-	return gulp
-		.src(['./src/assets/icons/*'], { encoding: false })
-		.pipe(gulp.dest(`${paths.dist}`));
+	return gulp.src(['./src/assets/icons/*'], { encoding: false }).pipe(gulp.dest(`${paths.dist}`));
 }
 
 /* copies all html files from root */
@@ -99,16 +102,10 @@ function copyHtml() {
 		// Merge manifests
 		const combinedManifest = {};
 		if (existsSync(cssManifestPath)) {
-			Object.assign(
-				combinedManifest,
-				JSON.parse(readFileSync(cssManifestPath, 'utf8'))
-			);
+			Object.assign(combinedManifest, JSON.parse(readFileSync(cssManifestPath, 'utf8')));
 		}
 		if (existsSync(jsManifestPath)) {
-			Object.assign(
-				combinedManifest,
-				JSON.parse(readFileSync(jsManifestPath, 'utf8'))
-			);
+			Object.assign(combinedManifest, JSON.parse(readFileSync(jsManifestPath, 'utf8')));
 		}
 
 		if (Object.keys(combinedManifest).length > 0) {
@@ -125,9 +122,7 @@ function copyHtml() {
 
 /* copies third party javascript dependencies */
 function copyJavaScriptDependencies() {
-	return gulp
-		.src(jsDependencies, { encoding: false })
-		.pipe(gulp.dest(paths.dest));
+	return gulp.src(jsDependencies, { encoding: false }).pipe(gulp.dest(paths.dest));
 }
 
 /* copies fontawesome font dependencies */
@@ -142,7 +137,7 @@ function copyFontawesomeFonts(done) {
 
 /* compiles all user styles including bootstrap and other imports */
 function compileSass() {
-	let stream = gulp.src(`${paths.styles}main.scss`);
+	let stream = gulp.src(`${paths.styles}main.scss`).pipe(plumber({ errorHandler }));
 
 	// Add sourcemaps only in development
 	if (!isProduction) {
@@ -181,9 +176,7 @@ function compileSass() {
 
 	// Write rev manifest in production
 	if (isProduction) {
-		stream = stream
-			.pipe(rev.manifest('css-manifest.json'))
-			.pipe(gulp.dest(paths.dist));
+		stream = stream.pipe(rev.manifest('css-manifest.json')).pipe(gulp.dest(paths.dist));
 	}
 
 	return stream;
@@ -191,9 +184,7 @@ function compileSass() {
 
 /* copies third party css dependencies */
 function copyCssDependencies() {
-	return gulp
-		.src(cssDependencies, { encoding: false })
-		.pipe(gulp.dest(`${paths.dist}styles/`));
+	return gulp.src(cssDependencies, { encoding: false }).pipe(gulp.dest(`${paths.dist}styles/`));
 }
 
 function reloadServer(done) {
@@ -211,16 +202,17 @@ function serve(done) {
 }
 
 function watch() {
-	gulp.watch(
-		paths.watch,
-		gulp.series(
-			copyAssets,
-			copyHtml,
-			compileSass,
-			compileCustomJavaScript,
-			reloadServer
-		)
-	);
+	// Watch SCSS files - only recompile Sass
+	gulp.watch('src/styles/**/*.scss', gulp.series(compileSass, reloadServer));
+
+	// Watch JS files - only recompile JavaScript
+	gulp.watch('src/scripts/**/*.js', gulp.series(compileCustomJavaScript, reloadServer));
+
+	// Watch HTML files - only copy HTML
+	gulp.watch('src/*.html', gulp.series(copyHtml, reloadServer));
+
+	// Watch assets - only copy assets
+	gulp.watch('src/assets/**/*', gulp.series(copyAssets, reloadServer));
 }
 
 /* default development gulp command */

@@ -89,10 +89,11 @@ function copyIcons() {
 	return gulp.src(['./src/assets/icons/*'], { encoding: false }).pipe(gulp.dest(`${paths.dist}`));
 }
 
-/* copies all html files from root */
+/* copies all html files from root and pages directory */
 function copyHtml() {
 	const { readFileSync, existsSync } = require('fs');
-	let stream = gulp.src(['./src/*.html']);
+	// Support both root-level HTML and nested pages
+	let stream = gulp.src(['./src/*.html', './src/pages/**/*.html'], { base: './src' });
 
 	// Rewrite asset references with hashed filenames in production
 	if (isProduction) {
@@ -182,6 +183,53 @@ function compileSass() {
 	return stream;
 }
 
+/* compiles all available themes for runtime switching */
+function compileAllThemes() {
+	const rename = require('gulp-rename');
+	const themes = ['whitelabel', 'theme1', 'theme1-dark'];
+
+	return Promise.all(
+		themes.map((theme) => {
+			let stream = gulp
+				.src(`${paths.styles}themes/${theme}/index.scss`)
+				.pipe(plumber({ errorHandler }));
+
+			// Add sourcemaps only in development
+			if (!isProduction) {
+				stream = stream.pipe(sourcemaps.init());
+			}
+
+			stream = stream.pipe(
+				sass
+					.sync({
+						loadPaths: ['.', 'node_modules'],
+						quietDeps: true,
+						silenceDeprecations: ['import', 'global-builtin', 'color-functions']
+					})
+					.on('error', sass.logError)
+			);
+
+			// Add autoprefixer
+			stream = stream.pipe(autoprefixer());
+
+			// Minify CSS in production
+			if (isProduction) {
+				stream = stream.pipe(cleanCSS({ compatibility: 'ie11' }));
+			}
+
+			// Write sourcemaps only in development
+			if (!isProduction) {
+				stream = stream.pipe(sourcemaps.write('.'));
+			}
+
+			// Rename to theme-specific filename
+			stream = stream.pipe(rename(`main-${theme}.css`));
+
+			return stream.pipe(gulp.dest(`${paths.dist}styles/themes/`));
+		})
+	);
+}
+
 /* copies third party css dependencies */
 function copyCssDependencies() {
 	return gulp.src(cssDependencies, { encoding: false }).pipe(gulp.dest(`${paths.dist}styles/`));
@@ -208,8 +256,8 @@ function watch() {
 	// Watch JS files - only recompile JavaScript
 	gulp.watch('src/scripts/**/*.js', gulp.series(compileCustomJavaScript, reloadServer));
 
-	// Watch HTML files - only copy HTML
-	gulp.watch('src/*.html', gulp.series(copyHtml, reloadServer));
+	// Watch HTML files - only copy HTML (including nested pages)
+	gulp.watch(['src/*.html', 'src/pages/**/*.html'], gulp.series(copyHtml, reloadServer));
 
 	// Watch assets - only copy assets
 	gulp.watch('src/assets/**/*', gulp.series(copyAssets, reloadServer));
@@ -225,6 +273,7 @@ exports.default = gulp.series(
 	copyJavaScriptDependencies,
 	copyCssDependencies,
 	compileSass,
+	compileAllThemes,
 	compileCustomJavaScript,
 	serve,
 	watch
@@ -240,6 +289,7 @@ exports.build = gulp.series(
 		copyJavaScriptDependencies,
 		copyCssDependencies,
 		compileSass,
+		compileAllThemes,
 		compileCustomJavaScript
 	),
 	// Copy HTML after CSS/JS compilation in production (for cache busting)

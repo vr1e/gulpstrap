@@ -1,3 +1,17 @@
-@import '../whitelabel'; /* whitelabel common theme styles (used inside all themes) */
-@import 'base'; /* overrides for theme colors and typography */
-@import 'styles'; /* overrides - theme specific styles */
+// Theme1 - inherits whitelabel and adds customizations
+
+// 1. Import Bootstrap functions first
+@import 'node_modules/bootstrap/scss/functions';
+
+// 2. Import variables in inheritance order
+@import '../whitelabel/variables';
+@import 'variables';
+
+// 3. Import Bootstrap core
+@import '../../vendors/bootstrap/bootstrap';
+
+// 4. Import styles in inheritance order
+@import '../whitelabel/base';
+@import '../whitelabel/styles';
+@import 'base';
+@import 'styles';

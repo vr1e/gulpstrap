@@ -16,7 +16,8 @@
 		"dev": "gulp",
 		"build": "NODE_ENV=production gulp build",
 		"clean": "rm -rf dist",
-		"format": "prettier --write 'src/**/*.{js,scss,html,json}' 'gulpfile.js' 'gulp.constants.js'"
+		"format": "prettier --write 'src/**/*.{js,scss,html,json}' 'gulpfile.js' 'gulp.constants.js'",
+		"create-theme": "node scripts/create-theme.js"
 	},
 	"devDependencies": {
 		"browser-sync": "^3.0.4",

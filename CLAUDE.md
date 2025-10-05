@@ -9,11 +9,12 @@ Gulpstrap is a static site generator built with Gulp 5 that bundles Bootstrap 5,
 ## Commands
 
 ```bash
-npm start          # Development server with live reload
-npm run dev        # Same as npm start
-npm run build      # Production build
-npm run clean      # Remove dist folder
-npm run format     # Format code with Prettier
+npm start                        # Development server with live reload
+npm run dev                      # Same as npm start
+npm run build                    # Production build
+npm run clean                    # Remove dist folder
+npm run format                   # Format code with Prettier
+npm run create-theme <name>      # Create a new theme (optionally specify parent)
 ```
 
 ## Architecture
@@ -25,12 +26,13 @@ Configuration in `gulpfile.js` and `gulp.constants.js`.
 **Key gulp tasks:**
 
 - `cleanDist()` - Remove dist folder
-- `compileSass()` - Compile SCSS to CSS with sourcemaps (dev) or minified (prod)
+- `compileSass()` - Compile active theme SCSS to CSS with sourcemaps (dev) or minified (prod)
+- `compileAllThemes()` - Compile all themes for runtime switching
 - `compileCustomJavaScript()` - Process custom JS with sourcemaps (dev) or minified (prod)
 - `copyJavaScriptDependencies()` - Copy Popper, Bootstrap, jQuery from node_modules
 - `copyCssDependencies()` - Copy FontAwesome CSS
 - `copyFontawesomeFonts()` - Copy FontAwesome webfonts
-- `copyHtml()` - Copy HTML files (with cache busting in production)
+- `copyHtml()` - Copy HTML files from root and `pages/` directory (with cache busting in production)
 - `copyAssets()` - Copy assets (with image optimization in production)
 - `copyIcons()` - Copy favicon files to dist root
 
@@ -95,6 +97,61 @@ Configured in `gulp.constants.js`:
 - jQuery
 - FontAwesome CSS
 
+## Modern Features
+
+### Multiple Page Support
+
+Place HTML files in `src/pages/` with any nested structure. Files are copied to `dist/` preserving directory structure.
+
+**Breadcrumbs:**
+Add `<div data-breadcrumb></div>` to any page and include `scripts/breadcrumbs.js` to auto-generate breadcrumbs.
+
+**Example:**
+```
+src/pages/examples/sample.html → dist/pages/examples/sample.html
+```
+
+### Runtime Theme Switching
+
+Themes are compiled to separate CSS files and can be switched at runtime without page reload.
+
+**Files:**
+- `src/scripts/theme-switcher.js` - Core theme switching logic with localStorage
+- `src/scripts/theme-picker.js` - UI component for theme selection
+- Compiled themes: `dist/styles/themes/main-{theme-name}.css`
+
+**Usage:**
+Add `<div data-theme-picker></div>` to your HTML to show theme picker dropdown.
+
+**JavaScript API:**
+```javascript
+ThemeSwitcher.switchTheme('theme1-dark');
+ThemeSwitcher.getCurrentTheme();
+ThemeSwitcher.getAvailableThemes();
+```
+
+### Theme CLI Tool
+
+Generate new themes with proper inheritance structure:
+
+```bash
+npm run create-theme my-theme              # Creates theme inheriting from whitelabel
+npm run create-theme my-dark-theme theme1  # Creates theme inheriting from theme1
+```
+
+**Generated structure:**
+- `_variables.scss` - Bootstrap variable overrides
+- `_styles.scss` - Custom theme styles
+- `index.scss` - Complete theme entry point with Bootstrap
+- `base/_colors.scss` - Color definitions (if parent has it)
+- `base/_typography.scss` - Typography definitions (if parent has it)
+
+**After creating a theme:**
+1. Edit theme files to customize
+2. Add theme to `compileAllThemes()` in `gulpfile.js`
+3. Add theme to `THEMES` object in `src/scripts/theme-switcher.js`
+4. Run `npm start` to compile
+
 ## Important Notes
 
 - **gulp-plumber** prevents watch crashes on errors
@@ -102,3 +159,5 @@ Configured in `gulp.constants.js`:
 - Bootstrap compiled from source for variable customization
 - Watch tasks optimized for incremental builds (only rebuilds changed file types)
 - Production builds include minification, cache busting, and image optimization
+- Themes use localStorage for persistence across sessions
+- All themes compile in parallel for optimal build performance

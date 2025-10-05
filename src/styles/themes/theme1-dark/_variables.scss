@@ -2,8 +2,7 @@
 
 /* Variables Overrides for bootstrap default variables */
 
-// Color system
+// Enable Bootstrap's color mode system
+$enable-dark-mode: true;
 
-$white: #333;
-$gray-600: #69737c;
-$gray-900: #ced4da;
+// Color system

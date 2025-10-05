@@ -1,4 +1,19 @@
-/* Import from default theme styles (light version of this theme)  */
-@import '../theme1';
-@import 'styles';
+// Theme1-dark - inherits theme1 and adds dark mode
+
+// 1. Import Bootstrap functions first
+@import 'node_modules/bootstrap/scss/functions';
+
+// 2. Import variables in inheritance order
+@import '../whitelabel/variables';
+@import '../theme1/variables';
 @import 'variables';
+
+// 3. Import Bootstrap core
+@import '../../vendors/bootstrap/bootstrap';
+
+// 4. Import styles in inheritance order
+@import '../whitelabel/base';
+@import '../whitelabel/styles';
+@import '../theme1/base';
+@import '../theme1/styles';
+@import 'styles';

@@ -18,6 +18,4 @@ exports.jsDependencies = [
 ];
 
 /* Vendor css dependencies - excluding bootstrap because of variables inside our custom css */
-exports.cssDependencies = [
-	'node_modules/@fortawesome/fontawesome-free/css/all.css'
-];
+exports.cssDependencies = ['node_modules/@fortawesome/fontawesome-free/css/all.css'];

@@ -49,7 +49,7 @@ This creates a production-ready `dist/` folder without starting the dev server.
 
 ```
 gulpstrap/
-├── src/                    # Source files
+├── src/                   # Source files
 │   ├── assets/            # Static assets (images, icons, etc.)
 │   ├── scripts/           # Custom JavaScript
 │   ├── styles/            # SCSS files
@@ -59,6 +59,16 @@ gulpstrap/
     ├── scripts/
     ├── styles/
     └── *.html
+```
+
+## 🔧 Available Commands
+
+```bash
+npm start              # Start dev server with live reload
+npm run dev            # Same as npm start
+npm run build          # Production build
+npm run clean          # Remove dist folder
+npm run format         # Format code with Prettier
 ```
 
 ## 🎨 Styling and Themes

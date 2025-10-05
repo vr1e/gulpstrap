@@ -1,71 +1,60 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
 
-Gulpstrap is a static site generator built with Gulp 4 that bundles Bootstrap 5, FontAwesome 5, jQuery, and Popper. It supports multi-theme styling with a hierarchical theme inheritance system.
+Gulpstrap is a static site generator built with Gulp 5 that bundles Bootstrap 5, FontAwesome 5, jQuery, and Popper. Features multi-theme styling with hierarchical inheritance.
 
 ## Commands
 
-### Development
 ```bash
-npm start
-# or
-gulp
+npm start          # Development server with live reload
+npm run dev        # Same as npm start
+npm run build      # Production build
+npm run clean      # Remove dist folder
+npm run format     # Format code with Prettier
 ```
-Runs the default development workflow:
-- Cleans `dist/` folder
-- Compiles all assets (SCSS, JS, HTML)
-- Copies dependencies and static files
-- Starts BrowserSync server on `dist/`
-- Watches for changes in `src/styles/**`, `src/scripts/**`, and `src/*.html`
-
-### Production Build
-```bash
-npm run build
-# or
-gulp build
-```
-Builds production-ready assets without starting the dev server.
 
 ## Architecture
 
-### Build System (gulpfile.js)
+### Build System
 
-The build process is defined in `gulpfile.js` with configuration in `gulp.constants.js`:
+Configuration in `gulpfile.js` and `gulp.constants.js`.
 
-**Key tasks:**
-- `cleanDist()` - Removes dist folder
-- `compileSass()` - Compiles `src/styles/main.scss` to `dist/styles/`
-- `compileCustomJavaScript()` - Copies user scripts from `src/scripts/` to `dist/scripts/`
-- `copyJavaScriptDependencies()` - Copies Popper, Bootstrap, jQuery from node_modules
-- `copyCssDependencies()` - Copies FontAwesome CSS
-- `copyFontawesomeFonts()` - Copies FontAwesome webfonts
-- `copyHtml()` - Copies HTML files from `src/` to `dist/`
-- `copyAssets()` - Copies `src/assets/` preserving structure
-- `copyIcons()` - Copies favicon files from `src/assets/icons/` to `dist/`
+**Key gulp tasks:**
+
+- `cleanDist()` - Remove dist folder
+- `compileSass()` - Compile SCSS to CSS with sourcemaps (dev) or minified (prod)
+- `compileCustomJavaScript()` - Process custom JS with sourcemaps (dev) or minified (prod)
+- `copyJavaScriptDependencies()` - Copy Popper, Bootstrap, jQuery from node_modules
+- `copyCssDependencies()` - Copy FontAwesome CSS
+- `copyFontawesomeFonts()` - Copy FontAwesome webfonts
+- `copyHtml()` - Copy HTML files (with cache busting in production)
+- `copyAssets()` - Copy assets (with image optimization in production)
+- `copyIcons()` - Copy favicon files to dist root
 
 ### Theme System
 
-The theming system uses a hierarchical inheritance model:
+Hierarchical inheritance model. Entry point: `src/styles/main.scss`
 
-**Entry point:** `src/styles/main.scss`
-1. Imports `themes/active_theme_variables.scss` - Bootstrap variable overrides
-2. Imports `vendors/bootstrap/bootstrap.scss` - Bootstrap core
-3. Imports `themes/active_theme.scss` - Theme-specific styles
+**Import order:**
 
-**Theme hierarchy:**
-- `whitelabel/` - Base theme with universal Bootstrap overrides
-- `theme1/` - Inherits from whitelabel
-- `theme1-dark/` - Dark variant inheriting from theme1
+1. `themes/active_theme_variables.scss` - Bootstrap variable overrides
+2. `vendors/bootstrap/bootstrap.scss` - Bootstrap core
+3. `themes/active_theme.scss` - Theme-specific styles
 
-**Switching themes:**
-Edit these two files to point to desired theme:
-- `src/styles/themes/active_theme.scss` - Change `@import './theme1-dark'`
-- `src/styles/themes/active_theme_variables.scss` - Change `@import 'theme1-dark/variables'`
+**Hierarchy:**
+
+- `whitelabel/` - Base theme
+- `theme1/` - Inherits whitelabel
+- `theme1-dark/` - Inherits theme1 (currently active)
+
+**To switch themes:**
+Edit `active_theme.scss` and `active_theme_variables.scss` to point to desired theme.
 
 **Theme structure:**
+
 ```
 themes/
 ├── active_theme_variables.scss  # Points to active theme variables
@@ -90,36 +79,26 @@ themes/
 ```
 
 **Customization:**
-- Override Bootstrap variables: Edit `whitelabel/_variables.scss`
-- Override colors: Edit `whitelabel/base/_colors.scss`
-- Override typography: Edit `whitelabel/base/_typography.scss`
-- Theme-specific overrides: Edit specific theme folder (e.g., `theme1/`)
-- Add Bootstrap components: Edit `vendors/bootstrap/bootstrap.scss`
 
-### Source Structure
+- Bootstrap variables: `whitelabel/_variables.scss`
+- Colors: `whitelabel/base/_colors.scss`
+- Typography: `whitelabel/base/_typography.scss`
+- Theme-specific: Edit specific theme folder
+- Bootstrap components: `vendors/bootstrap/bootstrap.scss`
 
-```
-src/
-├── assets/          # Static assets (images, icons, etc.)
-├── scripts/         # Custom JavaScript files
-├── styles/          # SCSS files (themes, vendors)
-└── *.html           # HTML pages
-```
+## Dependencies
 
-### Dependencies
+Configured in `gulp.constants.js`:
 
-JavaScript dependencies are configured in `gulp.constants.js`:
-- Popper (UMD build with source maps)
-- Bootstrap JS (with source maps)
+- Popper (UMD + sourcemaps)
+- Bootstrap JS (+ sourcemaps)
 - jQuery
-
-CSS dependencies:
-- FontAwesome CSS (Bootstrap is compiled from SCSS)
+- FontAwesome CSS
 
 ## Important Notes
 
-- The active theme is currently set to `theme1-dark`
-- Dark themes should inherit from their light parent theme
-- Bootstrap is compiled from source to allow variable customization
-- All compiled output goes to `dist/` which is served by BrowserSync
-- Sass uses `quietDeps: true` and silences import/global-builtin/color-functions deprecations
+- **gulp-plumber** prevents watch crashes on errors
+- **Prettier** formats code (`.prettierrc.json`)
+- Bootstrap compiled from source for variable customization
+- Watch tasks optimized for incremental builds (only rebuilds changed file types)
+- Production builds include minification, cache busting, and image optimization

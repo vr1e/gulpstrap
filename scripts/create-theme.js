@@ -10,6 +10,8 @@ const fs = require('fs');
 const path = require('path');
 
 const THEMES_DIR = path.join(__dirname, '../src/styles/themes');
+const GULPFILE_PATH = path.join(__dirname, '../gulpfile.js');
+const THEME_SWITCHER_PATH = path.join(__dirname, '../src/scripts/theme-switcher.js');
 const AVAILABLE_THEMES = ['whitelabel', 'theme1', 'theme1-dark'];
 
 /**
@@ -155,14 +157,24 @@ function createTheme(themeName, parentTheme = 'whitelabel') {
 		console.log(`   - base/_typography.scss`);
 		console.log(`   - base/index.scss`);
 	}
+
+	// Auto-update gulpfile.js and theme-switcher.js
+	console.log('\n🔧 Auto-updating configuration files:');
+	const gulpfileUpdated = updateGulpfile(themeName);
+	if (gulpfileUpdated) {
+		console.log(`   ✅ Updated gulpfile.js`);
+	}
+	const switcherUpdated = updateThemeSwitcher(themeName);
+	if (switcherUpdated) {
+		console.log(`   ✅ Updated theme-switcher.js`);
+	}
+
 	console.log('\n🎨 Next steps:');
 	console.log(
 		`   1. Edit src/styles/themes/${themeName}/_variables.scss to customize Bootstrap variables`
 	);
 	console.log(`   2. Edit src/styles/themes/${themeName}/_styles.scss to add custom styles`);
-	console.log(`   3. Update gulpfile.js compileAllThemes() to include "${themeName}"`);
-	console.log(`   4. Update src/scripts/theme-switcher.js to add "${themeName}" to THEMES object`);
-	console.log(`   5. Run "npm start" or "npm run build" to compile the theme`);
+	console.log(`   3. Run "npm start" or "npm run build" to compile the theme`);
 }
 
 /**
@@ -183,6 +195,90 @@ function getParentChain(theme) {
 	}
 
 	return chain;
+}
+
+/**
+ * Update gulpfile.js to include new theme in compileAllThemes()
+ */
+function updateGulpfile(themeName) {
+	let gulpfileContent = fs.readFileSync(GULPFILE_PATH, 'utf8');
+
+	// Find the themes array in compileAllThemes()
+	const themesArrayRegex = /(const themes = \[)([^\]]+)(\];)/;
+	const match = gulpfileContent.match(themesArrayRegex);
+
+	if (!match) {
+		console.warn('⚠️  Could not auto-update gulpfile.js - themes array not found');
+		return false;
+	}
+
+	// Parse existing themes
+	const existingThemes = match[2]
+		.split(',')
+		.map((t) => t.trim().replace(/['"]/g, ''))
+		.filter((t) => t);
+
+	// Add new theme if not already present
+	if (existingThemes.includes(themeName)) {
+		return true; // Already exists
+	}
+
+	existingThemes.push(themeName);
+
+	// Rebuild themes array string
+	const newThemesArray = existingThemes.map((t) => `'${t}'`).join(', ');
+	const newContent = gulpfileContent.replace(
+		themesArrayRegex,
+		`$1${newThemesArray}$3`
+	);
+
+	fs.writeFileSync(GULPFILE_PATH, newContent, 'utf8');
+	return true;
+}
+
+/**
+ * Update theme-switcher.js to include new theme in THEMES object
+ */
+function updateThemeSwitcher(themeName) {
+	let switcherContent = fs.readFileSync(THEME_SWITCHER_PATH, 'utf8');
+
+	// Check if theme already exists
+	if (switcherContent.includes(`'${themeName}':`)) {
+		return true; // Already exists
+	}
+
+	// Find the closing brace of the THEMES object
+	const themesStartRegex = /const THEMES = \{/;
+	const themesStartMatch = switcherContent.match(themesStartRegex);
+
+	if (!themesStartMatch) {
+		console.warn('⚠️  Could not auto-update theme-switcher.js - THEMES object not found');
+		return false;
+	}
+
+	// Find the line with the closing brace and semicolon
+	const closingBraceRegex = /(\n\t)(\};)/;
+	const closingMatch = switcherContent.match(closingBraceRegex);
+
+	if (!closingMatch) {
+		console.warn('⚠️  Could not auto-update theme-switcher.js - THEMES closing brace not found');
+		return false;
+	}
+
+	// Create human-readable name (convert kebab-case to Title Case)
+	const themePrettyName = themeName
+		.split('-')
+		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+		.join(' ');
+
+	// Add new theme entry (with proper indentation and comma)
+	const newThemeEntry = `,\n\t\t'${themeName}': {\n\t\t\tname: '${themePrettyName}',\n\t\t\tfile: '/styles/themes/main-${themeName}.css'\n\t\t}`;
+
+	// Insert before the closing brace
+	const newContent = switcherContent.replace(closingBraceRegex, `${newThemeEntry}\n\t$2`);
+
+	fs.writeFileSync(THEME_SWITCHER_PATH, newContent, 'utf8');
+	return true;
 }
 
 // CLI Logic

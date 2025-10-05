@@ -3,15 +3,18 @@
 // 1. Import Bootstrap functions first
 @import 'node_modules/bootstrap/scss/functions';
 
-// 2. Import variables in inheritance order
+// 2. Import color definitions (before variables so they can be used)
+@import 'base/colors';
+
+// 3. Import variables in inheritance order
 @import '../whitelabel/variables';
 @import 'variables';
 
-// 3. Import Bootstrap core
+// 4. Import Bootstrap core
 @import '../../vendors/bootstrap/bootstrap';
 
-// 4. Import styles in inheritance order
+// 5. Import styles in inheritance order
 @import '../whitelabel/base';
 @import '../whitelabel/styles';
-@import 'base';
+@import 'base/typography';
 @import 'styles';

@@ -127,13 +127,12 @@ function copyJavaScriptDependencies() {
 }
 
 /* copies fontawesome font dependencies */
-function copyFontawesomeFonts(done) {
-	gulp
+function copyFontawesomeFonts() {
+	return gulp
 		.src(['node_modules/@fortawesome/fontawesome-free/webfonts/**'], {
 			encoding: false
 		})
 		.pipe(gulp.dest(`${paths.dist}webfonts/`));
-	done();
 }
 
 /* compiles all user styles including bootstrap and other imports */
@@ -186,7 +185,7 @@ function compileSass() {
 /* compiles all available themes for runtime switching */
 function compileAllThemes() {
 	const rename = require('gulp-rename');
-	const themes = ['whitelabel', 'theme1', 'theme1-dark'];
+	const themes = ['whitelabel', 'theme1', 'theme1-dark', 'monochrome'];
 
 	return Promise.all(
 		themes.map((theme) => {

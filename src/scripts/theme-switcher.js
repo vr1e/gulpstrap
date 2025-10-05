@@ -20,6 +20,10 @@
 		'theme1-dark': {
 			name: 'Theme 1 Dark',
 			file: '/styles/themes/main-theme1-dark.css'
+		},
+		monochrome: {
+			name: 'Monochrome',
+			file: '/styles/themes/main-monochrome.css'
 		}
 	};
 

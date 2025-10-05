@@ -61,10 +61,13 @@ function createTheme(themeName, parentTheme = 'whitelabel') {
 // Inherits from ${parentTheme}
 @import '../${parentTheme}/variables';
 
-// Add your variable overrides here
+// Map your color palette to Bootstrap variables
+// Use colors defined in base/_colors.scss
 // Example:
-// $primary: #007bff;
-// $secondary: #6c757d;
+// $primary: $brand-blue;
+// $secondary: $brand-orange;
+// $body-bg: $light-gray;
+// $body-color: $dark-gray;
 `;
 	fs.writeFileSync(path.join(themeDir, '_variables.scss'), variablesContent);
 
@@ -82,10 +85,18 @@ function createTheme(themeName, parentTheme = 'whitelabel') {
 
 	// Create base/_colors.scss if parent has one
 	if (fs.existsSync(path.join(parentBaseDir, '_colors.scss'))) {
-		const colorsContent = `// ${themeName} - Color definitions
+		const colorsContent = `// ${themeName} - Color palette
 @import '../../${parentTheme}/base/colors';
 
-// Add your color overrides here
+// Override parent colors (optional)
+// Example:
+// $brand-blue: #0056b3;  // Darker version of parent's blue
+
+// Add new colors for this theme
+// Example:
+// $accent-color: #ff6b35;
+// $highlight: #ffd23f;
+// $muted: #6c757d;
 `;
 		fs.writeFileSync(path.join(themeDir, 'base/_colors.scss'), colorsContent);
 	}
@@ -117,19 +128,26 @@ function createTheme(themeName, parentTheme = 'whitelabel') {
 	indexContent += `// 1. Import Bootstrap functions first\n`;
 	indexContent += `@import 'node_modules/bootstrap/scss/functions';\n\n`;
 
-	// 2. Import variables in order
-	indexContent += `// 2. Import variables in inheritance order\n`;
+	// 2. Import color definitions (if they exist)
+	const hasColors = fs.existsSync(path.join(themeDir, 'base/_colors.scss'));
+	if (hasColors) {
+		indexContent += `// 2. Import color definitions (before variables so they can be used)\n`;
+		indexContent += `@import 'base/colors';\n\n`;
+	}
+
+	// 3. Import variables in order
+	indexContent += `// ${hasColors ? '3' : '2'}. Import variables in inheritance order\n`;
 	parentChain.forEach((parent) => {
 		indexContent += `@import '../${parent}/variables';\n`;
 	});
 	indexContent += `@import 'variables';\n\n`;
 
-	// 3. Import Bootstrap core
-	indexContent += `// 3. Import Bootstrap core\n`;
+	// 4. Import Bootstrap core
+	indexContent += `// ${hasColors ? '4' : '3'}. Import Bootstrap core\n`;
 	indexContent += `@import '../../vendors/bootstrap/bootstrap';\n\n`;
 
-	// 4. Import styles in order
-	indexContent += `// 4. Import styles in inheritance order\n`;
+	// 5. Import styles in order
+	indexContent += `// ${hasColors ? '5' : '4'}. Import styles in inheritance order\n`;
 	parentChain.forEach((parent) => {
 		if (fs.existsSync(path.join(THEMES_DIR, parent, 'base'))) {
 			indexContent += `@import '../${parent}/base';\n`;
@@ -138,8 +156,8 @@ function createTheme(themeName, parentTheme = 'whitelabel') {
 	});
 
 	// Import current theme styles
-	if (fs.existsSync(path.join(themeDir, 'base'))) {
-		indexContent += `@import 'base';\n`;
+	if (fs.existsSync(path.join(themeDir, 'base/_typography.scss'))) {
+		indexContent += `@import 'base/typography';\n`;
 	}
 	indexContent += `@import 'styles';\n`;
 

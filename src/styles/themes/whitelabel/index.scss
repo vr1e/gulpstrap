@@ -1,2 +1,14 @@
+// Whitelabel theme - complete theme with Bootstrap
+
+// 1. Import Bootstrap functions first (required for variable calculations)
+@import 'node_modules/bootstrap/scss/functions';
+
+// 2. Import theme variables (can now use Bootstrap functions)
+@import 'variables';
+
+// 3. Import Bootstrap core
+@import '../../vendors/bootstrap/bootstrap';
+
+// 4. Import theme styles
 @import './base';
 @import 'styles';

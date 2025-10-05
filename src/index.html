@@ -16,13 +16,17 @@
 		<meta name="theme-color" content="#333333" />
 		<!-- Font Awesome CSS -->
 		<link rel="stylesheet" href="./styles/all.css" />
-		<!-- Custom CSS -->
-		<link rel="stylesheet" href="./styles/main.css" />
+		<!-- Theme CSS will be loaded dynamically by theme-switcher.js -->
 	</head>
 	<body>
 		<div class="container p-4">
+			<!-- Theme Picker -->
+			<div class="d-flex justify-content-end mb-3">
+				<div data-theme-picker></div>
+			</div>
+
 			<div class="text-center">
-				<h1 class="title">Bootstrap 5.1, FontAwesome 5, jQuery, and Popper using Gulp 4</h1>
+				<h1 class="title">Bootstrap 5.3.8, FontAwesome 5, jQuery, and Popper using Gulp 4</h1>
 				<br />
 				<h2>
 					<a class="text-warning" href="https://github.com/vr1e/gulpstrap"
@@ -71,6 +75,9 @@
 		<script src="scripts/jquery.js"></script>
 		<script src="scripts/popper.min.js"></script>
 		<script src="scripts/bootstrap.js"></script>
-		<script src="scripts/index.js"></script>
+		<!-- Theme Switcher (must load before theme-picker) -->
+		<script src="scripts/theme-switcher.js"></script>
+		<script src="scripts/theme-picker.js"></script>
+		<script src="scripts/demo-title-color.js"></script>
 	</body>
 </html>

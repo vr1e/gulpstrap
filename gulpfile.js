@@ -250,8 +250,8 @@ function serve(done) {
 }
 
 function watch() {
-	// Watch SCSS files - only recompile Sass
-	gulp.watch('src/styles/**/*.scss', gulp.series(compileSass, reloadServer));
+	// Watch SCSS files - recompile main sass and all themes
+	gulp.watch('src/styles/**/*.scss', gulp.series(compileSass, compileAllThemes, reloadServer));
 
 	// Watch JS files - only recompile JavaScript
 	gulp.watch('src/scripts/**/*.js', gulp.series(compileCustomJavaScript, reloadServer));

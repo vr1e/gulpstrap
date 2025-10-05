@@ -1,9 +1,10 @@
 // 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
-// @import 'node_modules/bootstrap/scss/functions'; // imported inside active_theme_variables
+// @import 'node_modules/bootstrap/scss/functions'; // imported inside theme index
 
 // 2. Include remainder of required Bootstrap stylesheets
 // Configuration
-@import 'node_modules/bootstrap/scss/variables';
+// Note: Theme variables are imported before this file, so they override Bootstrap defaults
+@import 'node_modules/bootstrap/scss/variables'; // Import defaults for variables not overridden by theme
 @import 'node_modules/bootstrap/scss/variables-dark'; // Required for color modes (data-bs-theme)
 @import 'node_modules/bootstrap/scss/maps';
 @import 'node_modules/bootstrap/scss/mixins';

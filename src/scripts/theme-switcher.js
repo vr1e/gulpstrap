@@ -7,7 +7,7 @@
 	'use strict';
 
 	const STORAGE_KEY = 'gulpstrap-theme';
-	const DEFAULT_THEME = 'theme1-dark';
+	const DEFAULT_THEME = 'theme1';
 	const THEMES = {
 		whitelabel: {
 			name: 'Whitelabel',

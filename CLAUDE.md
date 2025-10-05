@@ -98,7 +98,7 @@ Configured in `gulp.constants.js`:
 ## Important Notes
 
 - **gulp-plumber** prevents watch crashes on errors
-- **Prettier** formats code (`.prettierrc.json`)
+- **Prettier** formats code (`.prettierrc`)
 - Bootstrap compiled from source for variable customization
 - Watch tasks optimized for incremental builds (only rebuilds changed file types)
 - Production builds include minification, cache busting, and image optimization

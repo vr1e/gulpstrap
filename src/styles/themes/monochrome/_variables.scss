@@ -1,0 +1,24 @@
+// Monochrome - Bootstrap variable overrides
+// Inherits from whitelabel
+@import '../whitelabel/variables';
+
+// Map grayscale palette to Bootstrap variables (colors defined in base/_colors.scss)
+$primary: $outer-space;
+$secondary: $slate-gray;
+$success: $onyx;
+$info: $french-gray-2;
+$warning: $french-gray;
+$danger: $eerie-black;
+$light: $antiflash-white;
+$dark: $eerie-black;
+
+// Body colors
+$body-bg: $seasalt;
+$body-color: $onyx;
+
+// Link colors
+$link-color: $slate-gray;
+$link-hover-color: $outer-space;
+
+// Border colors
+$border-color: $platinum;

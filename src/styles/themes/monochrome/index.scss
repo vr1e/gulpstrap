@@ -1,14 +1,13 @@
-// Theme1-dark - inherits theme1 and adds dark mode
+// monochrome - Complete theme with Bootstrap
 
 // 1. Import Bootstrap functions first
 @import 'node_modules/bootstrap/scss/functions';
 
-// 2. Import color definitions from parent theme
-@import '../theme1/base/colors';
+// 2. Import color definitions (before variables so they can be used)
+@import 'base/colors';
 
 // 3. Import variables in inheritance order
 @import '../whitelabel/variables';
-@import '../theme1/variables';
 @import 'variables';
 
 // 4. Import Bootstrap core
@@ -17,6 +16,5 @@
 // 5. Import styles in inheritance order
 @import '../whitelabel/base';
 @import '../whitelabel/styles';
-@import '../theme1/base/typography';
-@import '../theme1/styles';
+@import 'base/typography';
 @import 'styles';

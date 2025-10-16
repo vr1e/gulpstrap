@@ -4,7 +4,7 @@ This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
 
-Gulpstrap is a static site generator built with Gulp 5 that bundles Bootstrap 5, FontAwesome 5, jQuery, and Popper. Features runtime theme switching with hierarchical inheritance and automatic breadcrumb generation.
+Gulpstrap is a static site generator built with Gulp 5 that bundles Bootstrap 5.3, FontAwesome 7, jQuery, and Popper. Features runtime theme switching with hierarchical inheritance and automatic breadcrumb generation.
 
 ## Commands
 
